@@ -12,11 +12,11 @@
                 <input type="text" name="name" id="name" class="form-control" placeholder="{{ __('') }}" required>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="slug">{{ __('Slug') }}</label>
-                <input type="text" name="slug" id="slug" class="form-control" placeholder="{{ __('Slug') }}" required>
+                <label class="form-label" for="company_name">{{ __('Company Name') }}</label>
+                <input type="text" name="company_name" id="company_name" class="form-control" placeholder="{{ __('') }}" required>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="description">{{ __('Description') }}</label>
+                <label class="form-label" for="description">{{ __('About Company') }}</label>
                 <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter your text here..." required></textarea>
             </div>
             <div class="mb-3">
@@ -57,27 +57,12 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label class="form-label" for="address">{{ __('Address') }}</label>
+                <input type="text" name="address" id="address" class="form-control" placeholder="{{ __('address') }}" required>
+            </div>
+            <div class="mb-3">
                 <label class="form-label" for="logo_url">{{ __('Logo URL') }}</label>
                 <input type="url" name="logo_url" id="logo_url" class="form-control" placeholder="{{ __('Enter the Logo URL') }}" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">{{ __('Is Active') }}</label>
-                <div class="form-check">
-                    <input type="radio" name="is_active" id="is_active_true" class="form-check-input" value="1" required>
-                    <label class="form-check-label" for="is_active_true">{{ __('True') }}</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" name="is_active" id="is_active_false" class="form-check-input" value="0">
-                    <label class="form-check-label" for="is_active_false">{{ __('False') }}</label>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="user_limit">{{ __('User Limit') }}</label>
-                <input type="number" name="user_limit" id="user_limit" class="form-control" placeholder="{{ __('Enter the User Limit') }}" min="0" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="storage_limit">{{ __('Storage Limit') }}</label>
-                <input type="number" name="storage_limit" id="storage_limit" class="form-control" placeholder="{{ __('Enter the Storage Limit (in MB)') }}" min="0" required>
             </div>
         </div>
 

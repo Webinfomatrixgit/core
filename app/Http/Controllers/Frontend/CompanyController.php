@@ -109,7 +109,8 @@ class CompanyController extends Controller
         // Validate the incoming request data
         $validate = $request->validate([
             'name' => 'required|string',
-            'slug' => 'required|string|max:255',
+            'company_name' => 'required|string',
+            'address' => 'required|string',
             'description' => 'nullable|string',
             'email' => 'nullable|string',
             'phone' => 'nullable|string',
@@ -118,9 +119,6 @@ class CompanyController extends Controller
             'state_id' =>  'required|string',
             'country_id' =>  'required|string',   
             'logo_url' =>  'required|string',
-            'is_active' =>  'required|string',
-            'user_limit' =>  'required|string',
-            'storage_limit' =>  'required|string',
         ]);
         
         // dd($request);
@@ -129,8 +127,8 @@ class CompanyController extends Controller
         
         // Set the article's properties from the validated request data
         $company->user_id = auth()->id();
-        $company->name = $validate['name'];        // Ensure category is cast to integer
-        $company->slug = $validate['slug'];                    // Save the title
+        $company->name = $validate['name'];        // Ensure category is cast to integer 
+        $company->company_name = $validate['company_name'];
         $company->description = $validate['description'];          // Save the meta_title (optional)
         $company->email = $validate['email'];        // Save the description (optional)
         $company->phone = $validate['phone'];        // Save the meta_description (optional)
@@ -139,10 +137,8 @@ class CompanyController extends Controller
         $company->state_id = (int) $validate['state_id'];             // Save the content of the article
         $company->country_id = (int) $validate['country_id'];
         $company->logo = $validate['logo_url'];
-        $company->status = $validate['is_active'];
-        $company->user_limit = $validate['user_limit'];
-        $company->storage_limit = $validate['storage_limit'];
-        // dd($company);
+        $company->address = $validate['address'];
+        
         try {
             // Attempt to save the article to the database
             
@@ -153,6 +149,7 @@ class CompanyController extends Controller
             // Redirect back with success message
             return redirect()->back()->with('success', 'Company created successfully!');
         } catch (\Exception $e) {
+            dd($e);
             // Handle errors during saving, you can log the error message if needed
             notifyEvs('error', 'An error occurred while creating the article.');
             
@@ -166,7 +163,8 @@ class CompanyController extends Controller
          // Validate the incoming request data
          $validate = $request->validate([
             'name' => 'required|string',
-            'slug' => 'required|string|max:255',
+            'company_name' => 'required|string',
+            'address' => 'required|string',
             'description' => 'nullable|string',
             'email' => 'nullable|string',
             'phone' => 'nullable|string',
@@ -175,9 +173,6 @@ class CompanyController extends Controller
             'state_id' =>  'required|string',
             'country_id' =>  'required|string',   
             'logo_url' =>  'required|string',
-            'is_active' =>  'required|string',
-            'user_limit' =>  'required|string',
-            'storage_limit' =>  'required|string',
         ]);
         
         // Create a new company instance
@@ -192,7 +187,8 @@ class CompanyController extends Controller
         // Set the article's properties from the validated request data
         $company->user_id = auth()->id();
         $company->name = $validate['name'];        // Ensure category is cast to integer
-        $company->slug = $validate['slug'];                    // Save the title
+        $company->company_name = $validate['company_name'];                    // Save the title
+        $company->address = $validate['address'];
         $company->description = $validate['description'];          // Save the meta_title (optional)
         $company->email = $validate['email'];        // Save the description (optional)
         $company->phone = $validate['phone'];        // Save the meta_description (optional)
@@ -201,9 +197,6 @@ class CompanyController extends Controller
         $company->state_id = (int) $validate['state_id'];             // Save the content of the article
         $company->country_id = (int) $validate['country_id'];
         $company->logo = $validate['logo_url'];
-        $company->status = $validate['is_active'];
-        $company->user_limit = $validate['user_limit'];
-        $company->storage_limit = $validate['storage_limit'];
         // dd($company);
          // Attempt to update the article in the database
         try {

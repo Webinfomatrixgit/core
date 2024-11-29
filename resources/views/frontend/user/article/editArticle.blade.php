@@ -6,11 +6,20 @@
         <div class="card-body">
             <h2 class="mb-4"> {{ __('Edit Article') }}</h2>
             <div class="mb-3">
-                <label class="form-label" for="category">{{ __('Country') }}</label>
+                <label class="form-label" for="category">{{ __('Cateory') }}</label>
                 <select name="category" id="category" class="form-control" required>
                     <option value="" disabled selected>{{ __('Select a Category') }}</option>
                     @foreach($data['category'] as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="company">{{ __('Company') }}</label>
+                <select name="company" id="company" class="form-control" required>
+                    <option value="" disabled selected>{{ __('Select a Company') }}</option>
+                    @foreach($data['company'] as $company)
+                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                     @endforeach
                 </select>
             </div>

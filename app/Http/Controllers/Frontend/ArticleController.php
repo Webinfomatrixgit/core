@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Company;
 
 class ArticleController extends Controller
 {
@@ -22,6 +23,9 @@ class ArticleController extends Controller
         // Fetch the article data using the integer ID
         $article = Article::find($id);
         $data['category'] = Category::orderBy('name')->get(["name", "id"]);
+        $data['company'] = Company::where('user_id', auth()->id())
+            ->orderBy('company_name')
+            ->get(['company_name', 'id']);
         if($article) {
             return view('frontend.user.article.editArticle', compact('article', 'data'));
         }else{
@@ -34,6 +38,7 @@ class ArticleController extends Controller
     // Validate the incoming request data
     $validate = $request->validate([
         'category' => 'required|integer',                  // Ensure category is an integer
+        'company_id' => 'required|integer',
         'title' => 'required|string|max:255',               // Title is required and should be a string with max length 255
         'meta_title' => 'nullable|string|max:255',          // Meta title is optional
         'description' => 'nullable|string',                 // Description is optional
@@ -53,6 +58,7 @@ class ArticleController extends Controller
 
     // Update the article's properties with the validated request data
     $article->category_id = (int) $validate['category'];        // Ensure category is cast to integer
+    $article->conpany_id = (int) $validate['company_id'];
     $article->title = $validate['title'];                        // Update the title
     $article->meta_title = $validate['meta_title'];              // Update the meta_title (optional)
     $article->description = $validate['description'];            // Update the description (optional)
@@ -103,6 +109,9 @@ class ArticleController extends Controller
     public function addArticle()
     {
         $data['category'] = Category::orderBy('name')->get(["name", "id"]);
+        $data['company'] = Company::where('user_id', auth()->id())
+            ->orderBy('company_name')
+            ->get(['company_name', 'id']);
         return view('frontend.user.article.addArticle', compact('data'));
     }
 
@@ -111,6 +120,7 @@ class ArticleController extends Controller
         // Validate the incoming request data
         $validate = $request->validate([
             'category' => 'required|integer',                  // Ensure category is an integer
+            'company_id' => 'required|integer',
             'title' => 'required|string|max:255',               // Title is required and should be a string with max length 255
             'meta_title' => 'nullable|string|max:255',          // Meta title is optional
             'description' => 'nullable|string',                 // Description is optional
@@ -127,6 +137,7 @@ class ArticleController extends Controller
         // Set the article's properties from the validated request data
         $article->user_id = auth()->id();
         $article->category_id =(int) $validate['category'];        // Ensure category is cast to integer
+        $article->company_id = (int) $validate['company_id'];
         $article->title = $validate['title'];                    // Save the title
         $article->meta_title = $validate['meta_title'];          // Save the meta_title (optional)
         $article->description = $validate['description'];        // Save the description (optional)
